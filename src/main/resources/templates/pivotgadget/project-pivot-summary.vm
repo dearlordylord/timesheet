@@ -1,0 +1,80 @@
+#if ($loggedin)
+<style type="text/css">
+    .rowHeader {
+        background-color:#E2E2E2;
+    }
+    .rowAlternate {
+        background-color:#F2F2F2;
+    }
+    
+    .grid {
+        font-family:Arial,Helvetica,sans-serif;
+        font-size:12px;
+        background-color:#FCFCFC;
+        border:1px solid #D2D2D2;
+        border-collapse:collapse;
+    }
+    .grid th, .grid td {
+        border:1px solid #D2D2D2;
+        padding:4px;
+        vertical-align:top;
+    }
+</style>
+
+<div id="jira">
+    <div class="results-wrap">
+        <div>
+            <table class="grid" border="0" cellpadding="3" cellspacing="0" width="100%">
+                <tbody>
+                    #if ($workedIssues && $workedIssues.size())
+                    <tr class=rowHeader>
+                        <td class="colHeaderLink" colspan="4">
+                            #if ($filter)
+                                $i18n.getText("project.pivot.report", $filter.name)
+                                &nbsp;<font size="1">(<a href="$req.contextPath/secure/ConfigureReport.jspa?startDate=$startDate&endDate=$endDate&filterid=$filter.id&showIssues=true&reportKey=jira-timesheet-plugin:projectpivot">$i18n.getText("project.pivot.details")</a>)</font>
+                            #elseif ($project) 
+                                $i18n.getText("project.pivot.report", $project.name)
+                                &nbsp;<font size="1">(<a href="$req.contextPath/secure/ConfigureReport.jspa?startDate=$startDate&endDate=$endDate&projectid=$project.id&showIssues=true&reportKey=jira-timesheet-plugin:projectpivot">$i18n.getText("project.pivot.details")</a>)</font>
+                            #else
+                                $i18n.getText("project.pivot.report.all")
+                                &nbsp;<font size="1">(<a href="$req.contextPath/secure/ConfigureReport.jspa?startDate=$startDate&endDate=$endDate&showIssues=true&reportKey=jira-timesheet-plugin:projectpivot">$i18n.getText("project.pivot.details")</a>)</font>
+                            #end
+                            $i18n.getText($license, "$req.contextPath/plugins/servlet/com.fdu.jira.plugin.jira-timesheet-plugin/license")
+                        </td>
+                        #foreach ($user in $workedUsers.keySet())
+                             <td align="center" width="1%"><a href="$req.contextPath/secure/ConfigureReport.jspa?targetUser=$user.name&startDate=$startDate&endDate=$endDate&reportKey=jira-timesheet-plugin:report">$textutils.plainTextToHtml($user.fullName)</a></td>
+                        #end
+                        <td align="center" width="1%">$i18n.getText("project.pivot.tot")</td>
+                    </tr>
+                    #set ($lastVelocityCount = 1)
+                    #foreach ($issue in $workedIssues.keySet())
+		                #set($workLog = $workedIssues.get($issue))
+                        #parse('templates/pivotreport/pivot-entry.vm')
+                        #set ($lastVelocityCount = $velocityCount + 1)
+                    #end
+                    <tr #if ($lastVelocityCount % 2 != 0) class="rowNormal" #else class="rowAlternate" #end >
+                        #set ($total = 0)
+                        <td align="center" colspan="4">$i18n.getText("project.pivot.total")</td>
+                        #foreach ($user in $workedUsers.keySet())
+                            <td align="center"><b>$textUtil.getPrettyHours($workedUsers.get($user))</b></td>
+                            #set ($total = $total + $workedUsers.get($user).intValue())
+                        #end
+                        <td align="center"><b>
+                            #if ($total != 0)
+                                $textUtil.getPrettyHours($total)
+                            #end
+                        </b></td>
+                    </tr>
+                    #else
+                        <tr>
+                            <td align="center">
+                                $i18n.getText('project.pivot.notFound')
+                            </td>
+                        </tr>
+                    #end
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+#end

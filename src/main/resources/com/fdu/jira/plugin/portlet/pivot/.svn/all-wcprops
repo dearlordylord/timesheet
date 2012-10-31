@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/155898/TIME/trunk/src/main/resources/com/fdu/jira/plugin/portlet/pivot
+END
+pivot_portlet.properties
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/!svn/ver/155898/TIME/trunk/src/main/resources/com/fdu/jira/plugin/portlet/pivot/pivot_portlet.properties
+END
+pivot_portlet_en.properties
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/!svn/ver/155898/TIME/trunk/src/main/resources/com/fdu/jira/plugin/portlet/pivot/pivot_portlet_en.properties
+END

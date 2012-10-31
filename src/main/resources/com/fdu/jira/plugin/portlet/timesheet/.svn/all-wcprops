@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/168378/TIME/trunk/src/main/resources/com/fdu/jira/plugin/portlet/timesheet
+END
+timesheet_portlet.properties
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/!svn/ver/168378/TIME/trunk/src/main/resources/com/fdu/jira/plugin/portlet/timesheet/timesheet_portlet.properties
+END
+timesheet_portlet_en.properties
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/!svn/ver/167747/TIME/trunk/src/main/resources/com/fdu/jira/plugin/portlet/timesheet/timesheet_portlet_en.properties
+END
+timesheet_portlet_ru.properties
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/!svn/ver/153625/TIME/trunk/src/main/resources/com/fdu/jira/plugin/portlet/timesheet/timesheet_portlet_ru.properties
+END
+timesheet_portlet_fr.properties
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/!svn/ver/153625/TIME/trunk/src/main/resources/com/fdu/jira/plugin/portlet/timesheet/timesheet_portlet_fr.properties
+END

@@ -1,0 +1,40 @@
+#if ($projectTimeSpents)
+	#foreach ($project in $projectTimeSpents.keys())
+		<tr #if ($count % 2 == 0) class="rowNormal" #else class="rowAlternate" #end >
+			<td align="center"><b>
+					<a href="$req.contextPath/browse/$project.getKey()">$textutils.plainTextToHtml($project.getName())</a>
+			</b></td>
+            #if ($groupByField && $showUsers)
+                #set($colspan = 6)
+            #elseif ($groupByField || $showUsers)
+                #set($colspan = 5)
+            #else
+                #set($colspan = 4)
+            #end
+            #set($colspan = $colspan + $moreFields.size())
+            <td colspan="$colspan">&nbsp;</td>
+			#set ($totalWorked = 0)
+			#foreach ($weekDay in $weekDays)
+				#set ($projectWorkLog = $projectTimeSpents.get($project))
+				#if ($projectWorkLog.get($weekDay.getWeekDayDate()))	             	
+					#set ($timeSpent = $projectWorkLog.get($weekDay.getWeekDayDate()).intValue())
+				#else
+					#set ($timeSpent = 0)
+				#end
+				#set ($totalWorked = $totalWorked + $timeSpent)
+				<td align="center" class="$weekDay.getWeekDayCSS()">
+					#if($timeSpent != 0)
+						<b>$textUtil.getPrettyHours($timeSpent)</b>
+					#end
+				</td>	            	
+			#end
+			<td align="center"><b>$textUtil.getPrettyHours($totalWorked)</b></td>
+
+			<td align="center"><b>
+					<a href="$req.contextPath/browse/$project.getKey()">$textutils.plainTextToHtml($project.getName())</a>
+			</b></td>
+		
+			<td>&nbsp</td>
+		</tr>
+	#end
+#end

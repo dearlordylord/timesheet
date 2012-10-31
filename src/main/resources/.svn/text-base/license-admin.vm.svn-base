@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+    <head>
+        <title>$i18n.getText("plugin.license.storage.admin.title", "Timesheet Plugin")</title>
+        <meta name='decorator' content='atl.admin'/>
+    </head>
+    <body>
+        <h1>$i18n.getText("plugin.license.storage.admin.title", "Timesheet Plugin")</h1>
+            ## Because these message may embed html tags that we don't want to be overescaped
+            #set($successMessageWithHtml = $successMessage)
+            #set($errorMessageWithHtml = $errorMessage)
+            #set($warningMessageWithHtml = $warningMessage)
+
+            #set($dateFormat = "MMMM dd, yyyy")
+
+            #if ($successMessageWithHtml)
+            <div class="aui-message success"><span class="aui-icon icon-success"></span>$successMessageWithHtml</div>
+            #end
+            #if ($errorMessageWithHtml)
+            <div class="aui-message error"><span class="aui-icon icon-error"></span>$errorMessageWithHtml</div>
+            #end
+            #if ($warningMessageWithHtml)
+            <div class="aui-message warning"><span class="aui-icon icon-warning"></span>$warningMessageWithHtml</div>
+            #end
+
+            #if (!$upmLicensingAware && $displayLicenseAdminUi)
+            <h4>$i18n.getText("plugin.license.storage.admin.license.details")</h4>
+            <table class="aui">
+                <tbody>
+                    <tr>
+                        <td>$i18n.getText("plugin.license.storage.admin.license.attribute.status.title")</td>
+                        #if ($license.isDefined())
+                            #if ($license.get().valid)
+                            #set($validityText = "valid")
+                            #else
+                            #set($validityText = "invalid")
+                            #end
+
+                            #if ($license.get().evaluation)
+                            #set($typeText = "eval")
+                            #else
+                            #set($typeText =  "noneval")
+                            #end
+
+                            #set ($statusKey = "plugin.license.storage.admin.license.attribute.status." + $validityText + "." + $typeText)
+                            #set ($licenseTypeKey = "plugin.license.storage.admin.license.type." + $license.get().licenseType.name())
+
+                            #if ($license.get().error.isDefined())
+                                #set ($errorKey = "plugin.license.storage.admin.license.error." + $license.get().error.get().name())
+                                <td>$i18n.getText($statusKey, $i18n.getText($licenseTypeKey), $i18n.getText($errorKey))</td>
+                            #else
+                                <td>$i18n.getText($statusKey, $i18n.getText($licenseTypeKey))</td>
+                            #end
+                        #else
+                        <td>$i18n.getText("plugin.license.storage.admin.license.attribute.status.unlicensed")</td>
+                        #end
+                    </tr>
+                    <tr>
+                        <td>$i18n.getText("plugin.license.storage.admin.license.attribute.pluginkey.title")</td>
+                        <td>$pluginKey</td>
+                    </tr>
+
+                    #if ($license.isDefined())
+                        <tr>
+                            <td>$i18n.getText("plugin.license.storage.admin.license.attribute.maxusers.title")</td>
+                            #if ($license.get().unlimitedNumberOfUsers)
+                            <td>$i18n.getText("plugin.license.storage.admin.license.attribute.maxusers.unlimited")</td>
+                            #else
+                            <td>$license.get().maximumNumberOfUsers.get()</td>
+                            #end
+                        </tr>
+                        <tr>
+                            <td>$i18n.getText("plugin.license.storage.admin.license.attribute.creationdate.title")</td>
+                            <td>$license.get().creationDate.toString($dateFormat)</td>
+                        </tr>
+                        #if ($license.expiryDate.isDefined())
+                        <tr>
+                            <td>$i18n.getText("plugin.license.storage.admin.license.attribute.expirationdate.title")</td>
+                            <td>$license.get().expiryDate.get().toString($dateFormat)</td>
+                        </tr>
+                        #end
+                        #if ($license.maintenanceExpiryDate.isDefined())
+                        <tr>
+                            <td>$i18n.getText("plugin.license.storage.admin.license.attribute.maintenanceexpirationdate.title")</td>
+                            <td>$license.get().maintenanceExpiryDate.get().toString($dateFormat)</td>
+                        </tr>
+                        #end
+                        <tr>
+                            <td>$i18n.getText("plugin.license.storage.admin.license.attribute.description.title")</td>
+                            <td>$license.get().description</td>
+                        </tr>
+                        <tr>
+                            <td>$i18n.getText("plugin.license.storage.admin.license.attribute.organization.title")</td>
+                            <td>$license.get().organization.name</td>
+                        </tr>
+                        <tr>
+                            <td>$i18n.getText("plugin.license.storage.admin.license.attribute.serverid.title")</td>
+                            <td>$license.get().serverId</td>
+                        </tr>
+                        <tr>
+                            <td>$i18n.getText("plugin.license.storage.admin.license.attribute.sen.title")</td>
+                            <td>
+                            #if ($license.get().supportEntitlementNumber.isDefined())
+                                $license.get().supportEntitlementNumber.get()
+                            #end
+                            </td>
+                        </tr>
+                    #end
+                </tbody>
+            </table>
+
+        <h4>$i18n.getText("plugin.license.storage.admin.license.action.update.title")</h4>
+
+        #if ($eligibleButtons)
+        <h6>$i18n.getText("plugin.license.storage.admin.license.action.acquire.title")</h6>
+        <table>
+            <tbody>
+            <tr>
+                #if ($buyPluginUri)
+                <td>
+                    <form action="$buyPluginUri" method="post" class="aui">
+                        <input class="button" type="submit" value="$i18n.getText("plugin.license.storage.admin.license.action.buy")">
+                    </form>
+                </td>
+                #end
+                #if ($tryPluginUri)
+                <td>
+                    <form action="$tryPluginUri" method="post" class="aui">
+                        <input class="button" type="submit" value="$i18n.getText("plugin.license.storage.admin.license.action.try")">
+                    </form>
+                </td>
+                #end
+                #if ($renewPluginUri)
+                <td>
+                    <form action="$renewPluginUri" method="post" class="aui">
+                        <input class="button" type="submit" value="$i18n.getText("plugin.license.storage.admin.license.action.renew")">
+                    </form>
+                </td>
+                #end
+                #if ($upgradePluginUri)
+                <td>
+                    <form action="$upgradePluginUri" method="post" class="aui">
+                        <input class="button" type="submit" value="$i18n.getText("plugin.license.storage.admin.license.action.upgrade")">
+                    </form>
+                </td>
+                #end
+            </tr>
+            </tbody>
+        </table>
+        #end
+
+        <h6>$i18n.getText("plugin.license.storage.admin.license.action.new.title")</h6>
+        <form action="$servletUri" method="post">
+            <textarea name="license" cols="80" rows="10">#if ($license.isDefined())$license.get().getRawLicense()#end</textarea>
+            <input type="submit" value="$i18n.getText("plugin.license.storage.admin.license.action.update")">
+        </form>
+        #end
+    </body>
+</html>

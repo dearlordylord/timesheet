@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="__MSG_gadget.timesheet.title__" directory_title="__MSG_gadget.timesheet.title__" description="__MSG_gadget.timesheet.description__"
+                 author="Andrew Zhdanov"
+                 height="100" screenshot='#staticResourceUrl("jira-timesheet-plugin:timesheet-gadget", "timesheet-gadget-screenshot.png")'
+                 thumbnail='#staticResourceUrl("jira-timesheet-plugin:timesheet-gadget", "timesheet-gadget-thumb.png")'>
+        <Optional feature="gadget-directory">
+            <Param name="categories">
+                JIRA
+            </Param>
+        </Optional>
+        <Optional feature="atlassian.util" />
+        <Require feature="oauthpopup" />
+        <Require feature="dynamic-height"/>
+        #supportedLocales("gadget.common,gadget.pref,gadget.timesheet")
+    </ModulePrefs>
+    <UserPref name="num_weeks" display_name="__MSG_gadget.pref.label.num_weeks__" default_value="1" required="true"/>
+    <UserPref name="reporting_day" display_name="__MSG_gadget.pref.label.reporting_day__" datatype="enum" default_value="2" required="true">
+        <EnumValue value="0" display_value="__MSG_gadget.timesheet.today__"/>
+        <EnumValue value="2" display_value="__MSG_gadget.timesheet.Monday__"/>
+        <EnumValue value="3" display_value="__MSG_gadget.timesheet.Tuesday__"/>
+        <EnumValue value="4" display_value="__MSG_gadget.timesheet.Wednesday__"/>
+        <EnumValue value="5" display_value="__MSG_gadget.timesheet.Thursday__"/>
+        <EnumValue value="6" display_value="__MSG_gadget.timesheet.Friday__"/>
+        <EnumValue value="7" display_value="__MSG_gadget.timesheet.Saturday__"/>
+        <EnumValue value="1" display_value="__MSG_gadget.timesheet.Sunday__"/>
+    </UserPref>
+    <UserPref name="user" display_name="__MSG_gadget.pref.label.user__" default_value="" required="false"/>
+    <Content type="html" view="default">
+        <![CDATA[
+        #requireResource("com.atlassian.jira.gadgets:common-lite")
+        #includeResources()
+
+        <script type="text/javascript">
+            (function () {
+                var gadget = AJS.Gadget({
+                    baseUrl: "__ATLASSIAN_BASE_URL__",
+                    view: {
+                        template: function(args) {
+                            var gadget = this;
+
+                            gadget.getView().html(args.timesheet.html);
+                            AJS.$('.overlay').each(function(i, el) {
+                              var $el = AJS.$(el);
+                              $el.parent().hover(function() {
+                                $el.css('display', 'inline');                                
+                                var $w = AJS.$('#jira');
+                                var p = $el.offset();
+                                if ($el.height() + p.top > $w.height()) {
+                                  p.top = $w.height() - $el.height();
+                                  if (p.top < 0) {
+                                    p.top = 0;
+                                  }
+                                  $el.offset(p);
+                                }
+                                if ($el.width() + p.left > $w.width()) {
+                                  p.left = $w.width() - $el.width();
+                                  $el.offset(p)
+                                }
+                              }).mouseleave(function() {
+                                $el.hide();
+                              })
+                            });
+                            AJS.$('.add').each(function(i, el) {
+                              var $el = AJS.$(el);
+                              $el.parent().hover(function() {
+                                $el.show();                                
+                              }).mouseleave(function() {
+                                $el.hide();
+                              })
+                            });
+                            gadget.hideLoading();
+                        },
+                        args: [{
+                            key: "timesheet",
+                            ajaxOptions: function() {
+                                return {
+                                    url: "/rest/timesheet-gadget/1.0/timesheet.json",
+                                    data: {
+                                        targetUser: "__UP_user__",
+                                        numOfWeeks: "__UP_num_weeks__",
+                                        reportingDay: "__UP_reporting_day__"
+                                    }
+                                };
+                            }
+                        }]
+                    }
+                });
+            })();
+        </script>
+        ]]>
+    </Content>
+</Module>

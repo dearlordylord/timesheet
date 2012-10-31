@@ -1,0 +1,40 @@
+ <tr #if ($velocityCount % 2 != 0) class="rowNormal" #else class="rowAlternate" #end >
+	<td nowrap width=100%>
+        <a href="$req.contextPath/secure/ConfigureReport.jspa?startDate=$startDate&endDate=$endDate&targetUser=$user.name&reportKey=jira-timesheet-plugin:report&weekends=true&showUsers=false">$textutils.plainTextToHtml($user.displayName)</a>
+    </td>
+
+    #set ($timespents = false)
+    #if ($userWorkLog.get($user))
+	    #set ($timespents = $userWorkLog.get($user))
+	#end
+    #set ($total = 0)
+
+	#foreach ($weekDay in $weekDays)
+		#set ($dayOfMonth = $weekDay.weekDayDate.time)
+
+        #set ($timeSpent = 0)
+        #if ($weekTotalTimeSpents.get($dayOfMonth))
+            #set ($cellCSS = "$weekDay.weekDayCSS workedDay")
+        #else
+            #set ($cellCSS = "$weekDay.weekDayCSS nonWorkedDay")
+        #end
+		#if ($timespents)
+			#if ($timespents.get($weekDay.getWeekDayDate()))
+				#set ($timeSpent = $timespents.get($weekDay.getWeekDayDate()).intValue())
+				#set ($cellCSS = "$weekDay.weekDayCSS workedDay")
+			#end
+		#end
+		
+		<td align="center" class="$cellCSS">
+			#if ($timeSpent != 0)
+				$textUtil.getPrettyHours($timeSpent)
+			#end
+		</td>
+        #set ($total = $total + $timeSpent)
+	#end
+	<td align="center"><b>
+		#if ($total != 0)
+			$textUtil.getPrettyHours($total)
+		#end
+	</b></td>
+</tr>

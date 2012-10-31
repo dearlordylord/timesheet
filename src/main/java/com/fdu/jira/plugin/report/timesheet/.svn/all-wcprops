@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/168486/TIME/trunk/src/main/java/com/fdu/jira/plugin/report/timesheet
+END
+ProjectValuesGenerator.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/166942/TIME/trunk/src/main/java/com/fdu/jira/plugin/report/timesheet/ProjectValuesGenerator.java
+END
+PrioritiesValuesGenerator.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/!svn/ver/160803/TIME/trunk/src/main/java/com/fdu/jira/plugin/report/timesheet/PrioritiesValuesGenerator.java
+END
+GroupByFieldValuesGenerator.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/!svn/ver/160803/TIME/trunk/src/main/java/com/fdu/jira/plugin/report/timesheet/GroupByFieldValuesGenerator.java
+END
+GroupValuesGenerator.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/160803/TIME/trunk/src/main/java/com/fdu/jira/plugin/report/timesheet/GroupValuesGenerator.java
+END
+IssueProjectComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/160435/TIME/trunk/src/main/java/com/fdu/jira/plugin/report/timesheet/IssueProjectComparator.java
+END
+TimeSheet.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/168486/TIME/trunk/src/main/java/com/fdu/jira/plugin/report/timesheet/TimeSheet.java
+END

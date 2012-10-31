@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<atlassian-plugin key="${project.artifactId}" name="${project.name}" pluginsVersion="2">
+    <plugin-info>
+        <version>${project.version}</version>
+        <description>${project.description}</description>
+        <application-version min="4.4"/>
+        <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+        <param name="atlassian-licensing-enabled">true</param>
+        <param name="plugin-icon">images/timesheet-plugin-icon.png</param>
+        <param name="plugin-logo">images/timesheet-plugin-logo.png</param>
+        <param name="plugin-banner">images/timesheet-plugin-banner.png</param>
+    </plugin-info>
+
+    <resource type="i18n" name="i18n-timesheet" location="com.fdu.jira.plugin.portlet.timesheet.timesheet_portlet" />
+    <resource type="i18n" name="i18n-pivot" location="com.fdu.jira.plugin.portlet.pivot.pivot_portlet" />
+    
+    <!-- Timesheet Report -->
+    <report key="report" name="Timesheet Report" class="com.fdu.jira.plugin.report.timesheet.TimeSheet">
+        <description key="report.timesheet.description">i18n description</description>
+        <label key="report.timesheet.label" />
+
+        <resource type="velocity" name="view" location="templates/timesheetreport/timesheet-report.vm" />
+        <resource type="velocity" name="excel" location="templates/timesheetreport/timesheet-report-excel.vm" />
+        <resource type="i18n" name="i18n" location="com.fdu.jira.plugin.report.timesheet.timesheet_report" />
+
+        <properties>
+            <property>
+                <key>startDate</key>
+                <name>report.timesheet.startdate</name>
+                <description>report.timesheet.startdate.description</description>
+                <type>date</type>
+            </property>
+            <property>
+                <key>endDate</key>
+                <name>report.timesheet.enddate</name>
+                <description>report.timesheet.enddate.description</description>
+                <type>date</type>
+            </property>
+            <property>
+                <key>targetUser</key>
+                <name>report.timesheet.targetuser</name>
+                <description>report.timesheet.targetuser.description</description>
+                <type>user</type>
+            </property>
+            <property>
+                <key>targetGroup</key>
+                <name>report.timesheet.targetgroup</name>
+                <description>report.timesheet.targetgroup.description</description>
+                <type>select</type>
+                <values class="com.fdu.jira.plugin.report.timesheet.GroupValuesGenerator"/>
+            </property>
+            <property>
+                <key>priority</key>
+                <name>report.timesheet.priority.label</name>
+                <description>report.timesheet.priority.description</description>
+                <type>select</type>
+                <values class="com.fdu.jira.plugin.report.timesheet.PrioritiesValuesGenerator"/>
+                <default></default>
+            </property>
+            <property>
+                <key>project</key>
+                <name>report.timesheet.project.label</name>
+                <description>report.timesheet.project.description</description>
+                <type>select</type>
+                <values class="com.fdu.jira.plugin.report.timesheet.ProjectValuesGenerator"/>
+                <default></default>
+            </property>
+            <property>
+                <key>filterid</key>
+                <name>report.timesheet.filterid.name</name>
+                <description>report.timesheet.filterid.description</description>
+                <type>select</type>
+                <values class="com.fdu.jira.util.OptionalSearchRequestValuesGenerator"/>
+                <default></default>
+            </property>
+            <property>
+                <key>weekends</key>
+                <name>report.timesheet.weekends.label</name>
+                <description>report.timesheet.weekends.description</description>
+                <type>checkbox</type>
+                <default>true</default>
+            </property>
+            <property>
+                <key>showUsers</key>
+                <name>report.timesheet.showusers.label</name>
+                <description>report.timesheet.showusers.description</description>
+                <type>checkbox</type>
+                <default>true</default>
+            </property>
+            <property>
+                <key>groupByField</key>
+                <name>report.timesheet.groupbyfield.label</name>
+                <description>report.timesheet.groupbyfield.description</description>
+                <type>select</type>
+                <values class="com.fdu.jira.plugin.report.timesheet.GroupByFieldValuesGenerator" />
+                <default>true</default>
+             </property>
+          <property>
+                <key>moreFields</key>
+                <name>report.timesheet.morefields.label</name>
+                <description>report.timesheet.morefields.description</description>
+                <type>multiselect</type>
+                <values class="com.fdu.jira.plugin.report.timesheet.GroupByFieldValuesGenerator"/>
+            </property>             
+        </properties>
+    </report>
+    
+    <!-- Gadgets -->
+    <gadget key="timesheet-gadget" name="Time Sheet Gadget" location="gadget.xml">
+        <param name="roles-required">browse</param>
+    </gadget>
+    <gadget key="group-timesheet-gadget" name="Group Time Sheet Gadget" location="group-timesheet-gadget.xml">
+        <param name="roles-required">browse</param>
+    </gadget>
+    <gadget key="project-pivot-gadget" name="Project Pivot Gadget" location="project-pivot-gadget.xml">
+        <param name="roles-required">browse</param>
+    </gadget>
+    <resource type="i18n" name="i18n-all" location="i18n/ALL"/>
+
+    <resource type="download" name="timesheet-gadget-screenshot.png" location="images/timesheet-gadget-screenshot.png"/>
+    <resource type="download" name="timesheet-gadget-thumb.png" location="images/timesheet-gadget-thumb.png"/>
+    <resource type="download" name="project-pivot-gadget-screenshot.png" location="images/project-pivot-gadget-screenshot.png"/>
+    <resource type="download" name="project-pivot-gadget-thumb.png" location="images/project-pivot-gadget-thumb.png"/>
+
+    <rest key="timesheet-gadget-rest-resources" name="JIRA TimeSheet REST Endpoint" path="/timesheet-gadget" version="1.0">
+        <description>Provides the REST resource for the timesheet.</description>
+    </rest>
+
+    <!-- Project Pivot Report -->
+    <report key="projectpivot" name="Project Pivot Report" class="com.fdu.jira.plugin.report.pivot.Pivot">
+        <description key="report.pivot.description">i18n description</description>
+        <label key="report.pivot.label" />
+
+        <resource type="velocity" name="view" location="templates/pivotreport/pivot-report.vm" />
+        <resource type="velocity" name="excel" location="templates/pivotreport/pivot-report-excel.vm" />
+        <resource type="i18n" name="i18n" location="com.fdu.jira.plugin.report.pivot.pivot_report" />
+
+        <properties>
+            <property>
+                <key>projectid</key>
+                <name>report.pivot.projectid.name</name>
+                <description>report.pivot.projectid.description</description>
+                <type>select</type>
+                <values class="com.fdu.jira.plugin.report.timesheet.ProjectValuesGenerator"/>
+                <default></default>
+            </property>
+            <property>
+                <key>filterid</key>
+                <name>report.pivot.filterid.name</name>
+                <description>report.pivot.filterid.description</description>
+                <type>select</type>
+                <values class="com.fdu.jira.util.OptionalSearchRequestValuesGenerator"/>
+                <default></default>
+            </property>
+            <property>
+                <key>targetGroup</key>
+                <name>report.pivot.targetgroup.name</name>
+                <description>report.pivot.targetgroup.description</description>
+                <type>select</type>
+                <values class="com.fdu.jira.plugin.report.timesheet.GroupValuesGenerator"/>
+            </property>
+            <property>
+                <key>startDate</key>
+                <name>report.pivot.startdate</name>
+                <description>report.pivot.startdate.description</description>
+                <type>date</type>
+            </property>
+            <property>
+                <key>endDate</key>
+                <name>report.pivot.enddate</name>
+                <description>report.pivot.enddate.description</description>
+                <type>date</type>
+            </property>
+            <property>
+                <key>showIssues</key>
+                <name>report.pivot.showIssues</name>
+                <description>report.pivot.showIssues.description</description>
+                <type>checkbox</type>
+                <default>true</default>
+            </property>
+        </properties>
+    </report>
+    <component-import key="pluginAccessor" interface="com.atlassian.plugin.PluginAccessor"/>
+    <component-import key="pluginController" interface="com.atlassian.plugin.PluginController"/>
+    <component-import key="txTemplate" interface="com.atlassian.sal.api.transaction.TransactionTemplate"/>
+    <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties"/>
+    <component-import key="templateRenderer" interface="com.atlassian.templaterenderer.TemplateRenderer"/>
+    <component-import key="pluginSettingsFactory" interface="com.atlassian.sal.api.pluginsettings.PluginSettingsFactory"/>
+    <component-import key="loginUriProvider" interface="com.atlassian.sal.api.auth.LoginUriProvider"/>
+    <component-import key="userManager" interface="com.atlassian.sal.api.user.UserManager"/>
+    <component-import key="i18nResolver" interface="com.atlassian.sal.api.message.I18nResolver"/>
+    <component key="thirdPartyPluginLicenseStorageManager" class="com.atlassian.upm.license.storage.lib.ThirdPartyPluginLicenseStorageManagerImpl"/>
+    <component key="pluginLicenseStoragePluginInstaller" class="com.atlassian.upm.license.storage.lib.PluginLicenseStoragePluginInstaller"/>
+    <component key="atlassianMarketplaceUriFactory" class="com.atlassian.upm.license.storage.lib.AtlassianMarketplaceUriFactoryImpl"/>
+    <servlet name="License Servlet" i18n-name-key="license-servlet.name" key="license-servlet" class="com.fdu.jira.plugin.servlet.LicenseServlet">
+        <description key="license-servlet.description">The License Servlet Plugin</description>
+        <url-pattern>/com.fdu.jira.plugin.jira-timesheet-plugin/license</url-pattern>
+    </servlet>
+</atlassian-plugin>

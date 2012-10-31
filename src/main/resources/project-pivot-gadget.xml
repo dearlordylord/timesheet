@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="__MSG_gadget.project.pivot.title__" directory_title="__MSG_gadget.project.pivot.title__" description="__MSG_gadget.project.pivot.description__"
+                 author="Andrew Zhdanov"
+                 height="100" screenshot='#staticResourceUrl("jira-timesheet-plugin:project-pivot-gadget", "project-pivot-gadget-screenshot.png")'
+                 thumbnail='#staticResourceUrl("jira-timesheet-plugin:timesheet-gadget", "project-pivot-gadget-thumb.png")'>
+        <Optional feature="gadget-directory">
+            <Param name="categories">
+                JIRA
+            </Param>
+        </Optional>
+        <Optional feature="atlassian.util" />
+        <Require feature="oauthpopup" />  
+        <Require feature="dynamic-height"/>
+        <Require feature="setprefs"/>
+        <Require feature="views"/>
+        #supportedLocales("gadget.common,gadget.pref,gadget.project,gadget.timesheet")
+    </ModulePrefs>
+    <UserPref name="num_weeks" datatype="hidden" default_value="1"/>
+    <UserPref name="reporting_day" datatype="hidden" default_value="2"/>
+    <UserPref name="projectOrFilter" datatype="hidden" default_value="" />
+    <UserPref name="group" datatype="hidden" default_value="jira-users"/>
+    <UserPref name="isConfigured" datatype="hidden" default_value="false" />
+    <Content type="html" view="default">
+        <![CDATA[
+        #requireResource("com.atlassian.jira.gadgets:common-lite")
+        #requireResource("com.atlassian.jira.gadgets:autocomplete")
+        #includeResources()
+
+        <script type="text/javascript">
+            (function () {
+                var gadget = AJS.Gadget({
+                    baseUrl: "__ATLASSIAN_BASE_URL__",
+                    config: {
+					    descriptor: function(args) {
+					    	var gadget = this;
+					    	return {
+					    		fields: [
+					    		    {
+					    		    userpref: "num_weeks",
+					    		    label: "__MSG_gadget.pref.label.num_weeks__",
+					    		    type: "text",
+					    		    value: gadget.getPref("num_weeks")
+					    		    },
+					    		    {
+					    		    userpref: "reporting_day",
+					    		    label: "__MSG_gadget.pref.label.reporting_day__",
+					    		    type: "select",
+					    		    selected: gadget.getPref("reporting_day"),
+					    		    options: [
+					    		    	{label: "__MSG_gadget.timesheet.today__", value: "0"},
+					    		    	{label: "__MSG_gadget.timesheet.Monday__", value: "2"},
+					    		    	{label: "__MSG_gadget.timesheet.Tuesday__", value: "3"},
+					    		    	{label: "__MSG_gadget.timesheet.Wednesday__", value: "4"},
+					    		    	{label: "__MSG_gadget.timesheet.Thursday__", value: "5"},
+					    		    	{label: "__MSG_gadget.timesheet.Friday__", value: "6"},
+					    		    	{label: "__MSG_gadget.timesheet.Saturday__", value: "7"},
+					    		    	{label: "__MSG_gadget.timesheet.Sunday__", value: "1"}
+					    		    	]
+					    		    },
+					    		    {
+					    		    userpref: "group",
+					    		    label: "__MSG_gadget.pref.label.group__",
+					    		    type: "text",
+					    		    value: gadget.getPref("group")
+					    		    },
+					    			AJS.$.extend(AJS.gadget.fields.projectOrFilterPicker(gadget, "projectOrFilter"),
+					    			 {label: "__MSG_gadget.pref.label.projectOrFilter__", description: ""}),
+									AJS.gadget.fields.nowConfigured()
+					    		]
+					    	}
+					    }
+                    },
+                    view: {
+                        template: function(args) {
+                            var gadget = this;
+
+							// This is used to pass the name of filter or project to the picker
+							gadget.projectOrFilterName = args.timesheet.projectOrFilterName;
+							
+							//TODO? gadgets.window.setTitle(AJS.format("Average Age Chart: {0}", args.chart.filterTitle)); 
+
+                            gadget.getView().html(args.timesheet.html);
+                            gadget.hideLoading();
+                        },
+                        args: [{
+                            key: "timesheet",
+                            ajaxOptions: function() {
+                                return {
+                                    url: "/rest/timesheet-gadget/1.0/project-pivot-summary.json",
+                                    data: {
+                                        targetGroup: this.getPref("group"),
+                                        numOfWeeks: this.getPref("num_weeks"),
+                                        reportingDay: this.getPref("reporting_day"),
+                                        projectOrFilter: this.getPref("projectOrFilter")
+                                    }
+                                };
+                            }
+                        }]
+                    }
+                });
+            })();
+        </script>
+        ]]>
+    </Content>
+</Module>

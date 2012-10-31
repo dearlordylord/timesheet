@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/168486/TIME/trunk/src/main/resources
+END
+group-timesheet-gadget.xml
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/167747/TIME/trunk/src/main/resources/group-timesheet-gadget.xml
+END
+license-admin.vm
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/168073/TIME/trunk/src/main/resources/license-admin.vm
+END
+atlassian-plugin.xml
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/168483/TIME/trunk/src/main/resources/atlassian-plugin.xml
+END
+gadget.xml
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/168186/TIME/trunk/src/main/resources/gadget.xml
+END
+project-pivot-gadget.xml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/167747/TIME/trunk/src/main/resources/project-pivot-gadget.xml
+END

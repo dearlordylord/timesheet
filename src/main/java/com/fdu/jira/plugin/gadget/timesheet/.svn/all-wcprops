@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/168176/TIME/trunk/src/main/java/com/fdu/jira/plugin/gadget/timesheet
+END
+TimeSheetRepresentation.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/!svn/ver/166691/TIME/trunk/src/main/java/com/fdu/jira/plugin/gadget/timesheet/TimeSheetRepresentation.java
+END
+GroupTimeSheetResource.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/167951/TIME/trunk/src/main/java/com/fdu/jira/plugin/gadget/timesheet/GroupTimeSheetResource.java
+END
+TimeSheetResource.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/168176/TIME/trunk/src/main/java/com/fdu/jira/plugin/gadget/timesheet/TimeSheetResource.java
+END

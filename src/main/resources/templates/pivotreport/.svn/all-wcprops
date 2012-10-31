@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/168378/TIME/trunk/src/main/resources/templates/pivotreport
+END
+pivot-report.vm
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/168378/TIME/trunk/src/main/resources/templates/pivotreport/pivot-report.vm
+END
+pivot-entry.vm
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/165915/TIME/trunk/src/main/resources/templates/pivotreport/pivot-entry.vm
+END
+pivot-report-excel.vm
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/162339/TIME/trunk/src/main/resources/templates/pivotreport/pivot-report-excel.vm
+END

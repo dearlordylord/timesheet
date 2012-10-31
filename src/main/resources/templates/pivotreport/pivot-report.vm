@@ -1,0 +1,59 @@
+## Style Declaration
+<style type="text/css">
+    .tableBorder td {
+        padding: 5px;
+    }
+</style>
+<table class="tableBorder" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td>
+<table border="0" cellpadding="10" cellspacing="1" width="100%">
+    <tr class=rowHeader>
+        #if ($showIssues)
+        <td class="colHeaderLink" colspan="5" width="1%">
+        #else
+        <td class="colHeaderLink" colspan="3" width="1%">
+        #end
+        $i18n.getText("report.pivot.startdate"): <b>$startDate</b> $i18n.getText("report.pivot.enddate"): <b>$endDate</b>
+        #set($configure = "$req.contextPath/secure/ConfigureReport!default.jspa?startDate=$startDate&endDate=$endDate&showIssues=$showIssues&reportKey=jira-timesheet-plugin:projectpivot")
+        #if ($projectId) 
+            #set($configure = "$configure&projectid=$projectId")
+        #end
+        #if ($filterId)
+            #set($configure = "$configure&filterid=$filterId")
+        #end
+        #if ($targetGroup)
+            #set($configure = "$configure&targetGroup=$targetGroup")
+        #end 
+        $i18n.getText("configure", $configure)                            
+        $i18n.getText($license, "$req.contextPath/plugins/servlet/com.fdu.jira.plugin.jira-timesheet-plugin/license")
+        </td>
+        #foreach ($user in $workedUsers.keySet())
+            <td align="center" width="1%"><a href="$req.contextPath/secure/ConfigureReport.jspa?targetUser=$user.name&startDate=$startDate&endDate=$endDate&reportKey=jira-timesheet-plugin:report&weekends=true">$textutils.plainTextToHtml($user.fullName)</a></td>
+        #end
+        <td align="center" width="1%"><b>$i18n.getText("report.pivot.total")</b></td>
+    </tr>
+    <tr class="rowAlternate">
+        #if ($showIssues)
+            <td class="colHeaderLink" colspan="4" width="1%">
+                $i18n.getText("report.pivot.issue")
+            </td>
+        #else
+            <td class="colHeaderLink" colspan="2" width="1%">
+                <b>$i18n.getText("report.pivot.project")</b>
+            </td>
+        #end
+        #set($showTotalInFront = true)
+        <td align="center"><b>$i18n.getText("report.pivot.total")</b></td>
+        #set ($total = 0)
+        #foreach ($user in $workedUsers.keySet())
+            <td align="center"><b>$textUtil.getPrettyHours($workedUsers.get($user))</b></td>
+            #set ($total = $total + $workedUsers.get($user).intValue())
+        #end
+        <td align="center"><b>$textUtil.getPrettyHours($total)</b></td>
+    </tr>
+    #foreach ($issue in $workedIssues.keySet())
+		#set($workLog = $workedIssues.get($issue))
+        #parse('templates/pivotreport/pivot-entry.vm')
+    #end
+</table>
+</td></tr></table>
+    

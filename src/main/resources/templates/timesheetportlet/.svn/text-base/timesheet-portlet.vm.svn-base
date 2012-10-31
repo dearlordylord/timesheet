@@ -1,0 +1,125 @@
+#if ($loggedin)
+## Style Declaration
+<style type="text/css">
+    .rowHeader {
+        background-color:#E2E2E2;
+    }
+    .rowAlternate {
+        background-color:#F2F2F2;
+    }
+    
+    .businessDay {
+    }
+    .nonBusinessDay {
+        background-color: #ffeedd;
+    }
+    .nonWorkedDay {
+        color: #bbb;
+    }
+    .workedDay {
+    }
+    .toDay {
+        background-color: #ccffcc;
+    }
+    .grid {
+        font-family:Arial,Helvetica,sans-serif;
+        font-size:12px;
+        background-color:#FCFCFC;
+        border:1px solid #D2D2D2;
+        border-collapse:collapse;
+    }
+    .grid th, .grid td {
+        border:1px solid #D2D2D2;
+        padding:4px;
+        vertical-align:top;
+    }
+    .overlay {
+        display: none;
+        background:white; /* Fallback for web browsers that doesn't support RGBa  */
+        background:rgba(256, 256, 256, 0.75);
+        /* For IE 5.5 - 7*/
+	    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99FFFFFFF, endColorstr=#99FFFFFF);
+	    /* For IE 8*/
+	    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99FFFFFF, endColorstr=#99FFFFFF)";
+        position:absolute;
+        z-index:100;
+        text-align: left;
+        padding: 5px;
+        border:1px solid #ccc;
+        -moz-border-radius: 5px;
+        -webkit-border-radius:5px;
+        -khtml-border-radius:5px;
+        -moz-box-shadow: 0 1px 5px #333;
+        -webkit-box-shadow: 0 1px 5px #333;
+    }
+    .add {
+        display: none;
+        color: #666 !important;
+        text-decoration: none;
+    }
+    A:hover {
+        text-decoration: none !important;
+    }
+</style>
+    
+<div id="jira">
+    <div class="results-wrap">
+        <div>
+            <table class="grid" border="0" cellpadding="3" cellspacing="0" width="100%">
+                <tbody>
+                    <tr class=rowHeader>
+                        <td class="colHeaderLink" colspan="4">
+                            $i18n.getText("portlet.timesheet.summary", $textutils.plainTextToHtml($targetUser.displayName))
+                            &nbsp;<font size="1">(<a href="$req.contextPath/secure/ConfigureReport.jspa?startDate=$startDate&endDate=$endDate#if ($targetUser)&targetUser=$targetUser.name#end&reportKey=jira-timesheet-plugin:report&weekends=true&showUsers=true">$i18n.getText("portlet.timesheet.details")</a>)</font>
+                            $i18n.getText($license, "$req.contextPath/plugins/servlet/com.fdu.jira.plugin.jira-timesheet-plugin/license")
+                        </td>
+                        #foreach ($weekDay in $weekDays)
+                            <td align="center" width="1%" class="$weekDay.getWeekDayCSS()" title="$outlookDate.format($weekDay.getWeekDayDate())">$textUtil.formatDay($weekDay.getWeekDayDate())</td>
+                        #end
+                        <td align="center" width="1%">$i18n.getText("portlet.timesheet.tot")</td>
+                    </tr>
+                    #set ($worklogKeys = $weekWorkLog.keySet())
+                    #if ($worklogKeys.size() > 0)
+	                    #foreach ($issue in $worklogKeys)
+	                        #parse('templates/timesheetportlet/timesheet-entry.vm')
+	                        #set ($lastVelocityCount = $velocityCount + 1)
+	                    #end
+	                    <tr #if ($lastVelocityCount % 2 != 0) class="rowNormal" #else class="rowAlternate" #end >
+	                        #set ($total = 0)
+	                        <td align="center" colspan="4">$i18n.getText("portlet.timesheet.total")</td>
+	                        #foreach ($weekDay in $weekDays)
+	                            #set ($dayOfMonth = $weekDay.weekDayDate.time)
+	                            #if ($weekTotalTimeSpents.get($dayOfMonth))
+	                                #set ($timeSpent = $weekTotalTimeSpents.get($dayOfMonth).intValue())
+	                                #set ($cellCSS = "$weekDay.weekDayCSS workedDay")
+	                            #else
+	                                #set ($timeSpent = 0)
+	                                #set ($cellCSS = "$weekDay.weekDayCSS nonWorkedDay")
+	                            #end
+	                            <td align="center" class="$cellCSS" ><b>
+	                                #if ($timeSpent != 0) 
+	                                    $textUtil.getPrettyHours($timeSpent)
+	                                #end
+	                            </b></td>
+	                            #set ($total = $total + $timeSpent)
+	                        #end
+	                        <td align="center"><b>
+	                            #if ($total != 0)
+	                                $textUtil.getPrettyHours($total)
+	                            #end
+	                        </b></td>
+	                    </tr>
+                    #else
+                        <tr class="rowNormal">
+                            <td align="center">
+                                $i18n.getText('portlet.timesheet.noData')
+                            </td>
+                        </tr>
+                    #end
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+#end

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/168486/TIME/trunk/src/main/resources/com/fdu/jira/plugin/report/pivot
+END
+pivot_report.properties
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/168486/TIME/trunk/src/main/resources/com/fdu/jira/plugin/report/pivot/pivot_report.properties
+END
+pivot_report_en.properties
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/164231/TIME/trunk/src/main/resources/com/fdu/jira/plugin/report/pivot/pivot_report_en.properties
+END
+pivot_report_ru.properties
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/157974/TIME/trunk/src/main/resources/com/fdu/jira/plugin/report/pivot/pivot_report_ru.properties
+END
+pivot_report_fr.properties
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/153625/TIME/trunk/src/main/resources/com/fdu/jira/plugin/report/pivot/pivot_report_fr.properties
+END

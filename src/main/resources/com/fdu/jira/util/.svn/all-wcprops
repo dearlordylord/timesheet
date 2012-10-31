@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/153625/TIME/trunk/src/main/resources/com/fdu/jira/util
+END
+weekdays.properties
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/153625/TIME/trunk/src/main/resources/com/fdu/jira/util/weekdays.properties
+END
+weekdays_en.properties
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/153625/TIME/trunk/src/main/resources/com/fdu/jira/util/weekdays_en.properties
+END
+weekdays_ru.properties
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/153625/TIME/trunk/src/main/resources/com/fdu/jira/util/weekdays_ru.properties
+END
+weekdays_fr.properties
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/153625/TIME/trunk/src/main/resources/com/fdu/jira/util/weekdays_fr.properties
+END

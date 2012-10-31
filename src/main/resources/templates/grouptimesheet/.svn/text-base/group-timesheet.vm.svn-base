@@ -1,0 +1,106 @@
+#if ($loggedin)
+## Style Declaration
+<style type="text/css">
+    .rowHeader {
+        background-color:#E2E2E2;
+    }
+    .rowAlternate {
+        background-color:#F2F2F2;
+    }
+    
+    .businessDay {
+    }
+    .nonBusinessDay {
+        background-color: #ffeedd;
+    }
+    .nonWorkedDay {
+        color: #bbb;
+    }
+    .workedDay {
+    }
+    .toDay {
+        background-color: #ccffcc;
+    }
+    .grid {
+        font-family:Arial,Helvetica,sans-serif;
+        font-size:12px;
+        background-color:#FCFCFC;
+        border:1px solid #D2D2D2;
+        border-collapse:collapse;
+    }
+    .grid th, .grid td {
+        border:1px solid #D2D2D2;
+        padding:4px;
+        vertical-align:top;
+    }
+</style>
+
+<div id="jira">
+    <div class="results-wrap">
+        <div>
+            <table class="grid" border="0" cellpadding="3" cellspacing="0" width="100%">
+                <tbody>
+                    <tr class="rowHeader">
+                        <td class="colHeaderLink" colspan="1">
+                            #if ($targetGroup)
+                             	#if ($project)
+                            		$i18n.getText("group.timesheet.summarywithproj", $targetGroup, $project.name)
+                                    &nbsp;<font size="1">(<a href="$req.contextPath/secure/ConfigureReport.jspa?startDate=$startDate&endDate=$endDate&targetGroup=$targetGroup&reportKey=jira-timesheet-plugin:report&weekends=true&showUsers=false&project=$project.id">$i18n.getText("portlet.timesheet.details")</a>)</font>
+								#else
+                            		$i18n.getText("group.timesheet.summary", $targetGroup)
+                                    &nbsp;<font size="1">(<a href="$req.contextPath/secure/ConfigureReport.jspa?startDate=$startDate&endDate=$endDate&targetGroup=$targetGroup&reportKey=jira-timesheet-plugin:report&weekends=true&showUsers=false">$i18n.getText("portlet.timesheet.details")</a>)</font>
+                            	#end
+                            #else
+                              $i18n.getText('group.timesheet.noTargetGroupName')
+                            #end
+                            $i18n.getText($license, "$req.contextPath/plugins/servlet/com.fdu.jira.plugin.jira-timesheet-plugin/license")
+                        </td>
+                        #foreach ($weekDay in $weekDays)
+                            <td align="center" width="1%" class="$weekDay.getWeekDayCSS()" title="$outlookDate.format($weekDay.getWeekDayDate())">$textUtil.formatDay($weekDay.getWeekDayDate())</td>
+                        #end
+                        <td align="center" width="1%">$i18n.getText("portlet.timesheet.tot")</td>
+                    </tr>
+                    #if ($users && $users.size())
+                        #set ($lastVelocityCount = 0)
+                        #foreach ($user in $users)
+                            #parse('templates/grouptimesheet/group-timesheet-entry.vm')
+                            #set ($lastVelocityCount = $velocityCount + 1)
+                        #end
+                        <tr #if ($lastVelocityCount % 2 != 0) class="rowNormal" #else class="rowAlternate" #end >
+                            #set ($total = 0)
+                            <td align="center" colspan="1">$i18n.getText("portlet.timesheet.total")</td>
+                            #foreach ($weekDay in $weekDays)
+                                #set ($dayOfMonth = $weekDay.weekDayDate.time)
+                                #if ($weekTotalTimeSpents.get($dayOfMonth))
+                                    #set ($timeSpent = $weekTotalTimeSpents.get($dayOfMonth).intValue())
+                                    #set ($cellCSS = "$weekDay.weekDayCSS workedDay")
+                                #else
+                                    #set ($timeSpent = 0)
+                                    #set ($cellCSS = "$weekDay.weekDayCSS nonWorkedDay")
+                                #end
+                                <td align="center" class="$cellCSS" ><b>
+                                    #if ($timeSpent != 0) 
+                                        $textUtil.getPrettyHours($timeSpent)
+                                    #end
+                                </b></td>
+                                #set ($total = $total + $timeSpent)
+                            #end
+                            <td align="center"><b>
+                                #if ($total != 0)
+                                    $textUtil.getPrettyHours($total)
+                                #end
+                            </b></td>
+                        </tr>
+                    #else
+                        <tr>
+                            <td align="center">
+                                $i18n.getText('group.timesheet.notFound')
+                            </td>
+                        </tr>
+                    #end
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+#end

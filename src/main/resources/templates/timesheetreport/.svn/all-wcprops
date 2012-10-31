@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/168483/TIME/trunk/src/main/resources/templates/timesheetreport
+END
+timesheet-report-groupbyfield-totals.vm
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/!svn/ver/164953/TIME/trunk/src/main/resources/templates/timesheetreport/timesheet-report-groupbyfield-totals.vm
+END
+timesheet-report-excel.vm
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/162339/TIME/trunk/src/main/resources/templates/timesheetreport/timesheet-report-excel.vm
+END
+timesheet-report-user-totals.vm
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/164953/TIME/trunk/src/main/resources/templates/timesheetreport/timesheet-report-user-totals.vm
+END
+timesheet-report.vm
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/168483/TIME/trunk/src/main/resources/templates/timesheetreport/timesheet-report.vm
+END
+timesheet-entry-short.vm
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/168483/TIME/trunk/src/main/resources/templates/timesheetreport/timesheet-entry-short.vm
+END
+timesheet-report-totals.vm
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/!svn/ver/168483/TIME/trunk/src/main/resources/templates/timesheetreport/timesheet-report-totals.vm
+END
+timesheet-entry.vm
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/168483/TIME/trunk/src/main/resources/templates/timesheetreport/timesheet-entry.vm
+END
+timesheet-report-project-totals.vm
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/!svn/ver/168483/TIME/trunk/src/main/resources/templates/timesheetreport/timesheet-report-project-totals.vm
+END

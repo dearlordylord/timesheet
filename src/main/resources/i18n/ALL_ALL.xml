@@ -1,0 +1,36 @@
+<messagebundle>
+    <msg name="gadget.timesheet.title">Time Sheet</msg>
+    <msg name="gadget.timesheet.description">Displays a summary of worked time in a table.</msg>
+    <msg name="gadget.timesheet.details">Details</msg>
+    <msg name="gadget.timesheet.noentries">No data retrieved</msg>
+    <msg name="gadget.timesheet.issue">Issue</msg>
+    <msg name="gadget.timesheet.Mon">Mo</msg>
+    <msg name="gadget.timesheet.Tue">Tu</msg>
+    <msg name="gadget.timesheet.Wed">We</msg>
+    <msg name="gadget.timesheet.Thu">Th</msg>
+    <msg name="gadget.timesheet.Fri">Fr</msg>
+    <msg name="gadget.timesheet.Sat">Sa</msg>
+    <msg name="gadget.timesheet.Sun">Su</msg>
+    <msg name="gadget.timesheet.today">Today</msg>
+    <msg name="gadget.timesheet.Monday">Monday</msg>
+    <msg name="gadget.timesheet.Tuesday">Tuesday</msg>
+    <msg name="gadget.timesheet.Wednesday">Wednesday</msg>
+    <msg name="gadget.timesheet.Thursday">Thursday</msg>
+    <msg name="gadget.timesheet.Friday">Friday</msg>
+    <msg name="gadget.timesheet.Saturday">Saturday</msg>
+    <msg name="gadget.timesheet.Sunday">Sunday</msg>
+    <msg name="gadget.timesheet.total">Total:</msg>
+
+    <msg name="gadget.pref.label.num_weeks">Number of weeks:</msg>
+    <msg name="gadget.pref.label.reporting_day">Reporting day:</msg>
+    <msg name="gadget.pref.label.user">Show entries created by user (optional, current user if empty):</msg>
+
+    <msg name="gadget.group.timesheet.title">Group Time Sheet</msg>
+    <msg name="gadget.group.timesheet.description">Displays a summary of worked time for each user in a specified group.</msg>
+    <msg name="gadget.pref.label.group">Show summary for users in group:</msg>
+    <msg name="gadget.pref.label.project">Show summary for project:</msg>
+
+    <msg name="gadget.project.pivot.title">Project Pivot Report</msg>
+    <msg name="gadget.project.pivot.description">Displays a summary of worked time in a specified project.</msg>
+    <msg name="gadget.pref.label.projectOrFilter">Show summary for project or filter:</msg>
+</messagebundle>

@@ -1,0 +1,58 @@
+<tr #if ($velocityCount % 2 != 0) class="rowNormal" #else class="rowAlternate" #end >
+
+#if ($showIssues)
+
+<td width=1%>
+    #displayType($issue)
+</td>
+
+<td width=1%><a href="$req.contextPath/browse/$issue.key">$issue.key</a></td>
+
+<td width=100%>
+    #if ($issue.isSubTask())
+    <span class="smallgrey"><a href="$req.contextPath/browse/$issue.getParent().getString('key')" title="$issue.getParent().getString('summary')">$issue.getParent().getString('key')</a></span><br>
+        <img src="$req.contextPath/images/icons/link_out_bot.gif" width=16 height=16 border=0 align=absmiddle>
+    #end
+    <a href="$req.contextPath/browse/$issue.getKey()">$textutils.plainTextToHtml($issue.getSummary())</a>
+</td>
+
+<td width="1%">
+    #if ($fieldVisibility.isFieldHidden($issue.getProject().getLong("id"), "priority", $issue.getIssueType().getString("name")) == false)
+    #displayPriorityNoLink($issue)
+    #else
+      &nbsp;
+    #end
+</td>
+
+#else
+
+<td width=1%><a href="$req.contextPath/browse/$issue.key">$issue.key</a></td>
+
+<td width=100%>
+    <a href="$req.contextPath/browse/$issue.key">$textutils.plainTextToHtml($issue.name)</a>
+</td>
+
+#end
+
+#set ($outerIndex = $velocityCount)
+#set ($totalWorked = 0)
+#if ($showTotalInFront)
+#foreach ($user in $workedUsers.keySet())
+    #if ($workLog.get($user))
+        #set ($totalWorked = $totalWorked + $workLog.get($user).intValue())
+    #end
+#end
+<td align="center" width=1%><b>$textUtil.getPrettyHours($totalWorked)</b></td>
+#end
+#set ($totalWorked = 0)
+#foreach ($user in $workedUsers.keySet())
+    #if ($workLog.get($user))
+     #set ($worked = $workLog.get($user).intValue())
+    #else 
+     #set ($worked = 0)
+    #end
+    <td align="center" width=1%>$textUtil.getPrettyHours($worked)</td>
+    #set ($totalWorked = $totalWorked + $worked)
+#end
+#set ($velocityCount = $outerIndex)
+<td align="center" width=1%><b>$textUtil.getPrettyHours($totalWorked)</b></td>
